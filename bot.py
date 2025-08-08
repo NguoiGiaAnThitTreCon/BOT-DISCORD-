@@ -22,7 +22,7 @@ START_BALANCE = 100_000
 
 # Theo dõi thay đổi số dư
 last_balances = load_balances().copy()
-DISCORD_USER_ID = 1401939463524974642  # 🔹 ID Discord cá nhân của bạn
+DISCORD_USER_ID = 970327824915365949  # 🔹 ID Discord cá nhân của bạn
 
 def get_result(dice):
     total = sum(dice)
