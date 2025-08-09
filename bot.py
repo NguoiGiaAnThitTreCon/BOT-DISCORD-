@@ -6,7 +6,7 @@ import os
 import json
 from config import TOKEN
 from data import load_balances, save_balances
-from keep_alive import keep_alive  # ✅ giữ bot sống trên Render
+from keep_alive import keep_alive
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -20,9 +20,9 @@ current_bets = {}
 betting_open = False
 START_BALANCE = 100_000
 
-# Theo dõi thay đổi số dư
+
 last_balances = load_balances().copy()
-DISCORD_USER_ID = 970327824915365949  # 🔹 ID Discord cá nhân của bạn
+DISCORD_USER_ID = 970327824915365949
 
 def get_result(dice):
     total = sum(dice)
@@ -32,7 +32,7 @@ def get_result(dice):
 async def on_ready():
     print("✅ BOT OK")
     print(f"🤖 Bot đã đăng nhập dưới tên: {bot.user}")
-    bot.loop.create_task(watch_balances())  # Bắt đầu task theo dõi file
+    bot.loop.create_task(watch_balances())
 
 async def watch_balances():
     global last_balances
@@ -61,7 +61,7 @@ async def watch_balances():
                             changes.append(f"📉 **<@{uid}> {-diff:,} VND** (tổng: {balance:,} VND)")
 
                 if changes:
-                    # Gửi thông báo kèm file mới
+                    
                     await user.send(
                         content="📂 **balances.json mới (đã cập nhật)**\n" + "\n".join(changes),
                         file=discord.File("balances.json")
@@ -72,8 +72,7 @@ async def watch_balances():
         except Exception as e:
             print("Lỗi khi kiểm tra balances.json:", e)
 
-        await asyncio.sleep(2)  # Kiểm tra mỗi 2 giây
-
+        await asyncio.sleep(2)
 @bot.command()
 async def batdau(ctx):
     global betting_open, current_bets
@@ -264,5 +263,5 @@ async def chotphien(ctx):
     await ctx.send(embed=embed)
 
 print("🔄 Đang khởi động bot...")
-keep_alive()  # ✅ Gọi webserver giữ bot sống
+keep_alive()
 bot.run(TOKEN)
